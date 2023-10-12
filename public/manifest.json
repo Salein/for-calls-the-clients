@@ -2,7 +2,7 @@
   "name": "For Calls The Clients",
   "short_name": "Clients",
   "theme_color": "#2196f3",
-  "background_color": "#004b01",
+  "background_color": "#fafa6e, #bdea75, #255667",
   "display": "standalone",
   "orientation": "portrait",
   "start_url": ".",
