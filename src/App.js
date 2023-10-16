@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
+import Teseract from './components/Tesseract/Teseract';
 
 function App() {
   return (
     <div className="App">
-    <h1>тык</h1>
+    <Teseract />
     </div>
   );
 }
