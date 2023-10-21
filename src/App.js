@@ -13,7 +13,10 @@ const App = () => {
     Tesseract.recognize(
       image,
       'rus',
-      {logger: (m) => {console.log(m)}}
+      {logger: (m) => {console.log(m)
+      if (m.status === 'recognizing text') {
+        setProgress(parseInt(m.progress * 100))
+      }}}
     ).then (({data: {text}}) => {
       setText(text)
       setIsLoading(false)
