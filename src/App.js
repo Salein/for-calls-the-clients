@@ -1,48 +1,26 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { createWorker } from "tesseract.js"
 import "./App.css"
 
 const App = () => {
-  const [selectedImage, setSelectedImage] = useState(null)
-  const [textResult, setTextResult] = useState("")
-
-  const worker = createWorker()
   
-// ниже багло
-  useEffect(() => {
-    const convertImageToText = async () => {
-      await worker.load()
-      await worker.loadLanguage("ru")
-      await worker.initialize("ru")
-      const { data } = await worker.recognize(selectedImage)
-      console.log(data.text)
-    }
-  }, [selectedImage])
-
-  const handleChangeImage = (e) => {
-    setSelectedImage(e.target.files[0])
-  }
+  const [isLoading, setIsLoading] = useState(false)
+  const [text, setText] = useState('')
+  const [image, setImage] = useState('')
 
   return (
-    <div className="App">
-      <input
-        type="file"
-        id="upload"
-        accept="image/*"
-        onChange={handleChangeImage}
-      />
+    <div className="container" style={{ height: "100vh" }}>
+      <div className="row h-100">
+        <div className="col-md-5 mx-auto d-flex flex-column align-items-center">
+          {!isLoading && <h1 className="mt-5 mb-4">Convert Image To Text</h1>}
 
-      <button type="button" id="start">
-        Начать обработку
-      </button>
-
-      <div id="log">
-        {selectedImage && (
-          <div>
-            <img src={URL.createObjectURL(selectedImage)} alt="thumb" />
-          </div>
-        )}
-        {textResult && <div>{textResult}</div>}
+          {!isLoading && !text && (
+            <>
+              <input type="file" className="form-control" onChange={(e) => setImage(URL.createObjectURL(e.target.files[0]))} />
+              <input type="button" className="form-control btn btn-primary mt-4" />
+            </>
+          ) }
+        </div>
       </div>
     </div>
   )
