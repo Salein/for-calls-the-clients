@@ -1,25 +1,65 @@
 import React, { useState } from "react"
-import { createWorker } from "tesseract.js"
+import Tesseract from "tesseract.js"
 import "./App.css"
 
 const App = () => {
-  
   const [isLoading, setIsLoading] = useState(false)
-  const [text, setText] = useState('')
-  const [image, setImage] = useState('')
+  const [text, setText] = useState("")
+  const [image, setImage] = useState("")
+  const [progress, setProgress] = useState(0)
+
+  const handleClick = () => {
+    setIsLoading(true)
+    Tesseract.recognize(
+      image,
+      'rus',
+      {logger: (m) => {console.log(m)}}
+    ).then (({data: {text}}) => {
+      setText(text)
+      setIsLoading(false)
+    })
+  }
 
   return (
     <div className="container" style={{ height: "100vh" }}>
       <div className="row h-100">
         <div className="col-md-5 mx-auto d-flex flex-column align-items-center">
-          {!isLoading && <h1 className="mt-5 mb-4">Convert Image To Text</h1>}
+          {!isLoading && (
+            <h1 className="mt-4 mb-5 pb-3">Convert Image To Text</h1>
+          )}
 
           {!isLoading && !text && (
             <>
-              <input type="file" className="form-control" onChange={(e) => setImage(URL.createObjectURL(e.target.files[0]))} />
-              <input type="button" className="form-control btn btn-primary mt-4" />
+              <input
+                type="file"
+                className="form-control"
+                onChange={(e) =>
+                  setImage(URL.createObjectURL(e.target.files[0]))
+                }
+              />
+              <input
+                type="button"
+                className="form-control btn btn-primary mt-4"
+                value="Конвертировать"
+                onClick={handleClick}
+              />
             </>
-          ) }
+          )}
+
+          {isLoading && (
+            <>
+              <p className="text-center">Конвертирование - {progress}%</p>
+            </>
+          )}
+
+          {!isLoading && text && (
+            <textarea
+              className="form-control"
+              rows="15"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            ></textarea>
+          )}
         </div>
       </div>
     </div>
