@@ -8,16 +8,20 @@ const App = () => {
   const [image, setImage] = useState("")
   const [progress, setProgress] = useState(0)
 
+  window.onerror = function (error) {
+    alert('Ой, вы забыли выбрать файл')
+  }
+
   const handleClick = () => {
     setIsLoading(true)
-    Tesseract.recognize(
-      image,
-      'rus',
-      {logger: (m) => {console.log(m)
-      if (m.status === 'recognizing text') {
-        setProgress(parseInt(m.progress * 100))
-      }}}
-    ).then (({data: {text}}) => {
+    Tesseract.recognize(image, "rus", {
+      logger: (m) => {
+        console.log(m)
+        if (m.status === "recognizing text") {
+          setProgress(parseInt(m.progress * 100))
+        }
+      },
+    }).then(({ data: { text } }) => {
       setText(text)
       setIsLoading(false)
     })
@@ -35,7 +39,7 @@ const App = () => {
             <>
               <input
                 type="file"
-                className="form-control"
+                className="form-control mb-2 pb-2"
                 onChange={(e) =>
                   setImage(URL.createObjectURL(e.target.files[0]))
                 }
@@ -51,7 +55,9 @@ const App = () => {
 
           {isLoading && (
             <>
-              <p className="text-center mt-4 mb-4">Конвертирование - {progress}%</p>
+              <p className="text-center mt-4 mb-4">
+                Конвертирование - {progress}%
+              </p>
             </>
           )}
 
