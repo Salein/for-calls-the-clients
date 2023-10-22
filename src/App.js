@@ -28,7 +28,7 @@ const App = () => {
       <div className="row h-100">
         <div className="col-md-5 mx-auto d-flex flex-column align-items-center">
           {!isLoading && (
-            <h1 className="mt-4 mb-5 pb-3">Convert Image To Text</h1>
+            <h1 className="mt-4 mb-5 pb-3">Конверт картинки в текст</h1>
           )}
 
           {!isLoading && !text && (
@@ -43,7 +43,7 @@ const App = () => {
               <input
                 type="button"
                 className="form-control btn btn-primary mt-4"
-                value="Конвертировать"
+                value="Начать обработку"
                 onClick={handleClick}
               />
             </>
@@ -51,7 +51,7 @@ const App = () => {
 
           {isLoading && (
             <>
-              <p className="text-center">Конвертирование - {progress}%</p>
+              <p className="text-center mt-4 mb-4">Конвертирование - {progress}%</p>
             </>
           )}
 
