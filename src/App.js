@@ -9,7 +9,7 @@ const App = () => {
   const [progress, setProgress] = useState(0)
 
   window.onerror = function (error) {
-    alert('Ой, вы забыли выбрать файл! \n Перезапустите приложение')
+    alert('Ой, вы забыли выбрать файл! \n Перезапустите приложение пожалуйста!')
   }
 
   const handleClick = () => {
