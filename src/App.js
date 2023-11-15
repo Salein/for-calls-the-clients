@@ -7,21 +7,27 @@ const App = () => {
   const [text, setText] = useState("")
   const [image, setImage] = useState("")
   const [progress, setProgress] = useState(0)
+  const [sentence, setSentence] = useState("")
 
   window.onerror = function (error) {
-    alert('Ой, вы забыли выбрать файл! \n Перезапустите приложение пожалуйста!')
+    alert('Ой, кажется вы забыли выбрать файл! \n Перезапустите приложение пожалуйста!')
   }
+
+  
+
 
   const handleClick = () => {
     setIsLoading(true)
     Tesseract.recognize(image, "rus", {
       logger: (m) => {
         console.log(m)
+        setSentence(m.status)
         if (m.status === "recognizing text") {
           setProgress(parseInt(m.progress * 100))
         }
       },
     }).then(({ data: { text } }) => {
+      console.log({data: {text}})
       setText(text)
       setIsLoading(false)
     })
@@ -58,6 +64,7 @@ const App = () => {
               <p className="text-center mt-4 mb-4">
                 Конвертирование - {progress}%
               </p>
+              <h5>{sentence}</h5>
             </>
           )}
 
