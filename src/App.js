@@ -8,13 +8,13 @@ const App = () => {
   const [image, setImage] = useState("")
   const [progress, setProgress] = useState(0)
   const [sentence, setSentence] = useState("")
+  const [toggle, setToggle] = useState(false)
 
   window.onerror = function (error) {
-    alert('Ой, кажется вы забыли выбрать файл! \n Перезапустите приложение пожалуйста!')
+    alert(
+      "Ой, кажется вы забыли выбрать файл! \n Перезапустите приложение пожалуйста!",
+    )
   }
-
-  
-
 
   const handleClick = () => {
     setIsLoading(true)
@@ -27,10 +27,19 @@ const App = () => {
         }
       },
     }).then(({ data: { text } }) => {
-      console.log({data: {text}})
+      console.log({ data: { text } })
       setText(text)
       setIsLoading(false)
     })
+  }
+
+  const handleReamove = () => {
+    setText('')
+    setToggle(false)
+  }
+
+  const handleInput = () => {
+      setToggle(!toggle)
   }
 
   return (
@@ -69,13 +78,19 @@ const App = () => {
           )}
 
           {!isLoading && text && (
-            <textarea
-              className="form-control"
-              rows="15"
+            <input
+            onClick={handleInput}
+              type="button"
+              className="form-control btn btn-primary color='info'"
+              rows="10"
               value={text}
-              onChange={(e) => setText(e.target.value)}
-            ></textarea>
+            ></input>
           )}
+          {toggle && (<div>
+              <button type="phone" className="mt-1 mb-2 pb-1 btn-primary color='success"><a href="tel:80293100614">Позвонить</a></button>
+              <button onClick={handleReamove} type="button" className="mt-1 mb-2 pb-1 color='success">Удалить</button>
+            </div>)
+          }
         </div>
       </div>
     </div>
